@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/utils/donut_tile.dart';
 
 class DonutTab extends StatelessWidget {
   //Lista de donas 
@@ -24,8 +25,9 @@ DonutTab({super.key});
       gridDelegate:
       SliverGridDelegateWithFixedCrossAxisCount(
         //Cuántas columnas
-        crossAxisCount: 2, // Cuántos elementos por fila
-        childAspectRatio: 1.5, // Relación de aspecto de los elementos
+        crossAxisCount: 2,
+         // Cuántos elementos por fila
+        childAspectRatio: 1/1.5, // Relación de aspecto de los elementos
       ),
       itemBuilder: (context, index){
         //Cada elemento individual
@@ -33,10 +35,10 @@ DonutTab({super.key});
         donutPrice: donutsOnSale[index][1],
         donutColor: donutsOnSale[index][2],
         imageName: donutsOnSale[index][3],
-        donutFlavor: donutsOnSale [index][0],
+        donutFlavor: donutsOnSale [index][0]
          // Título de la dona (flavors.dart))
-        )
-      } {
+        );
+      } 
     ) ; 
   }
 }
