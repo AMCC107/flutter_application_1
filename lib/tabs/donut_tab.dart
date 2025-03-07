@@ -16,8 +16,29 @@ DonutTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("DonutTab")
-    ) ;
+    // Widget para usar cuadrícula 
+    return GridView.builder(
+      //Cuántos elementos hay en la rejilla?
+      itemCount: donutsOnSale.length,
+      padding:EdgeInsets.all(12),
+      // Prepa 1.Cómo se distribuirán los elementos
+      gridDelegate:
+      SliverGridDelegateWithFixedCrossAxisCount(
+        //Cuántas columnas
+        crossAxisCount: 2,
+         // Cuántos elementos por fila
+        childAspectRatio: 1/1.5, // Relación de aspecto de los elementos
+      ),
+      itemBuilder: (context, index){
+        //Cada elemento individual
+        return DonutTile (
+        donutPrice: donutsOnSale[index][1],
+        donutColor: donutsOnSale[index][2],
+        imageName: donutsOnSale[index][3],
+        donutFlavor: donutsOnSale [index][0]
+         // Título de la dona (flavors.dart))
+        );
+      } 
+    ) ; 
   }
 }
