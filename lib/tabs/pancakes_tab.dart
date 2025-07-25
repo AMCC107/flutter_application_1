@@ -4,97 +4,49 @@ import 'package:flutter/material.dart';
 
 class PanCakesTab extends StatelessWidget {
   final Function(Product) addToCart;
-//listas de donas
+
+  // Lista de pancakes con: id, name, description, price, color, image, stock
   final List pancakesOnSale = [
-    [
-      "Banana Pancakes",
-      "Sweet Morning",
-      "35",
-      Colors.yellow,
-      "lib/images/PancakeBanana.png"
-    ],
-    [
-      "Blackberry Pancakes",
-      "Berry Delight",
-      "40",
-      Colors.purple,
-      "lib/images/PancakeBlackberry.png"
-    ],
-    [
-      "Blueberry Pancakes",
-      "Blueberry Bliss",
-      "42",
-      Colors.blue,
-      "lib/images/PancakeBluekberry.png"
-    ],
-    [
-      "Cherry Pancakes",
-      "Cherry Top",
-      "38",
-      Colors.red,
-      "lib/images/PancakeCherry.png"
-    ],
-    [
-      "Double Pancakes",
-      "Double Trouble",
-      "50",
-      Colors.orange,
-      "lib/images/PancakeDouble.png"
-    ],
-    [
-      "Extra Fluffy Pancakes",
-      "Fluffy Heaven",
-      "45",
-      Colors.pink,
-      "lib/images/PancakeExtra.png"
-    ],
-    [
-      "Jelly Pancakes",
-      "Jelly Joy",
-      "37",
-      Colors.pink,
-      "lib/images/PancakeJelly.png"
-    ],
-    [
-      "Simple Pancakes",
-      "Classic Bites",
-      "30",
-      Colors.brown,
-      "lib/images/PancakeSimple.png"
-    ],
+    [1, "Banana Pancakes", "Sweet Morning", 35.0, Colors.yellow, "lib/images/PancakeBanana.png", 12],
+    [2, "Blackberry Pancakes", "Berry Delight", 40.0, Colors.purple, "lib/images/PancakeBlackberry.png", 10],
+    [3, "Blueberry Pancakes", "Blueberry Bliss", 42.0, Colors.blue, "lib/images/PancakeBluekberry.png", 8],
+    [4, "Cherry Pancakes", "Cherry Top", 38.0, Colors.red, "lib/images/PancakeCherry.png", 15],
+    [5, "Double Pancakes", "Double Trouble", 50.0, Colors.orange, "lib/images/PancakeDouble.png", 6],
+    [6, "Extra Fluffy Pancakes", "Fluffy Heaven", 45.0, Colors.pink, "lib/images/PancakeExtra.png", 5],
+    [7, "Jelly Pancakes", "Jelly Joy", 37.0, Colors.pink, "lib/images/PancakeJelly.png", 9],
+    [8, "Simple Pancakes", "Classic Bites", 30.0, Colors.brown, "lib/images/PancakeSimple.png", 20],
   ];
 
   PanCakesTab({super.key, required this.addToCart});
 
   @override
   Widget build(BuildContext context) {
-    //Widget para usar cuadrícula
     return GridView.builder(
-        //cuantos elementos hay en la rejilla
-        itemCount: pancakesOnSale.length,
-        padding: EdgeInsets.all(12),
-        // Preparatoria 1. cómo se distribuirán los elementos
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //para decir cuantas columnas usará
-          crossAxisCount: 2,
-          //relación de aspecto (proporción)
-          childAspectRatio: 1 / 1.5,
-        ),
-        itemBuilder: (context, index) {
-          //cada elemento individual
-          return DonutTile(
-              donutFlavor: pancakesOnSale[index][0],
-              donutStore: pancakesOnSale[index][1],
-              donutPrice: pancakesOnSale[index][2].toString(),
-              donutColor: pancakesOnSale[index][3],
-              imageName: pancakesOnSale[index][4],
-              onAddToCart: () {
-                double price = double.parse(pancakesOnSale[index][2]);
-                addToCart(Product(
-                  name: pancakesOnSale[index][0],
-                  price: price,
-                ));
-              });
-        });
+      itemCount: pancakesOnSale.length,
+      padding: const EdgeInsets.all(12),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1 / 1.5,
+      ),
+      itemBuilder: (context, index) {
+        var pancake = pancakesOnSale[index];
+
+        return DonutTile(
+          donutFlavor: pancake[1], // name
+          donutStore: pancake[2],  // description
+          donutPrice: pancake[3].toString(), // price
+          donutColor: pancake[4], // color
+          imageName: pancake[5],  // image
+          onAddToCart: () {
+            addToCart(Product(
+              id: pancake[0],
+              name: pancake[1],
+              price: pancake[3],
+              stock: pancake[6],
+            ));
+          },
+        );
+      },
+    );
   }
 }

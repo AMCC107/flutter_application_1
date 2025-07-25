@@ -1,100 +1,114 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/donut_tile.dart';
 import 'package:flutter_application_1/models/product.dart';
-import 'package:flutter/material.dart';
 
 class SmoothiesTab extends StatelessWidget {
   final Function(Product) addToCart;
-//listas de donas
-  final List smoothiesOnSale = [
-    [
-      "Banana Smoothie",
-      "Fruity Blend",
-      "25",
-      Colors.yellow,
-      "lib/images/SmoothieBanana.png"
-    ],
-    [
-      "Avocado Smoothie",
-      "Green Goodness",
-      "30",
-      Colors.green,
-      "lib/images/SmoothieAvocado.png"
-    ],
-    [
-      "Blueberry Smoothie",
-      "Berry Boost",
-      "28",
-      Colors.blue,
-      "lib/images/SmoothieBlueberry.png"
-    ],
-    [
-      "Lemon Smoothie",
-      "Citrus Splash",
-      "22",
-      Colors.yellowAccent,
-      "lib/images/SmoothieLemon.png"
-    ],
-    [
-      "Orange Smoothie",
-      "Orange Zest",
-      "24",
-      Colors.orange,
-      "lib/images/SmoothieOrange.png"
-    ],
-    [
-      "Strawberry Smoothie",
-      "Berry Bliss",
-      "26",
-      Colors.pink,
-      "lib/images/SmoothieStrawberry.png"
-    ],
-    [
-      "Watermelon Smoothie",
-      "Summer Refresh",
-      "27",
-      Colors.red,
-      "lib/images/SmoothieWatermelon.png"
-    ],
-    [
-      "Tropical Smoothie",
-      "Tropical Mix",
-      "29",
-      Colors.orangeAccent,
-      "lib/images/SmoothieBanana.png"
-    ],
+
+  final List<Map<String, dynamic>> smoothiesOnSale = [
+    {
+      "id": 1,
+      "name": "Banana Smoothie",
+      "description": "Fruity Blend",
+      "price": 25.0,
+      "stock": 10,
+      "color": Colors.yellow,
+      "image": "lib/images/SmoothieBanana.png"
+    },
+    {
+      "id": 2,
+      "name": "Avocado Smoothie",
+      "description": "Green Goodness",
+      "price": 30.0,
+      "stock": 8,
+      "color": Colors.green,
+      "image": "lib/images/SmoothieAvocado.png"
+    },
+    {
+      "id": 3,
+      "name": "Blueberry Smoothie",
+      "description": "Berry Boost",
+      "price": 28.0,
+      "stock": 12,
+      "color": Colors.blue,
+      "image": "lib/images/SmoothieBlueberry.png"
+    },
+    {
+      "id": 4,
+      "name": "Lemon Smoothie",
+      "description": "Citrus Splash",
+      "price": 22.0,
+      "stock": 9,
+      "color": Colors.yellowAccent,
+      "image": "lib/images/SmoothieLemon.png"
+    },
+    {
+      "id": 5,
+      "name": "Orange Smoothie",
+      "description": "Orange Zest",
+      "price": 24.0,
+      "stock": 7,
+      "color": Colors.orange,
+      "image": "lib/images/SmoothieOrange.png"
+    },
+    {
+      "id": 6,
+      "name": "Strawberry Smoothie",
+      "description": "Berry Bliss",
+      "price": 26.0,
+      "stock": 11,
+      "color": Colors.pink,
+      "image": "lib/images/SmoothieStrawberry.png"
+    },
+    {
+      "id": 7,
+      "name": "Watermelon Smoothie",
+      "description": "Summer Refresh",
+      "price": 27.0,
+      "stock": 10,
+      "color": Colors.red,
+      "image": "lib/images/SmoothieWatermelon.png"
+    },
+    {
+      "id": 8,
+      "name": "Tropical Smoothie",
+      "description": "Tropical Mix",
+      "price": 29.0,
+      "stock": 6,
+      "color": Colors.orangeAccent,
+      "image": "lib/images/SmoothieBanana.png"
+    },
   ];
 
   SmoothiesTab({super.key, required this.addToCart});
 
   @override
   Widget build(BuildContext context) {
-    //Widget para usar cuadrícula
     return GridView.builder(
-        //cuantos elementos hay en la rejilla
-        itemCount: smoothiesOnSale.length,
-        padding: EdgeInsets.all(12),
-        // Preparatoria 1. cómo se distribuirán los elementos
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //para decir cuantas columnas usará
-          crossAxisCount: 2,
-          //relación de aspecto (proporción)
-          childAspectRatio: 1 / 1.5,
-        ),
-        itemBuilder: (context, index) {
-          //cada elemento individual
-          return DonutTile(
-              donutFlavor: smoothiesOnSale[index][0],
-              donutStore: smoothiesOnSale[index][1],
-              donutPrice: smoothiesOnSale[index][2].toString(),
-              donutColor: smoothiesOnSale[index][3],
-              imageName: smoothiesOnSale[index][4],
-              onAddToCart: () {
-                double price = double.parse(smoothiesOnSale[index][2]);
-                addToCart(Product(
-                  name: smoothiesOnSale[index][0],
-                  price: price,
-                ));
-              });
-        });
+      itemCount: smoothiesOnSale.length,
+      padding: EdgeInsets.all(12),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1 / 1.5,
+      ),
+      itemBuilder: (context, index) {
+        final smoothie = smoothiesOnSale[index];
+        return DonutTile(
+          donutFlavor: smoothie["name"],
+          donutStore: smoothie["description"],
+          donutPrice: smoothie["price"].toString(),
+          donutColor: smoothie["color"],
+          imageName: smoothie["image"],
+          onAddToCart: () {
+            addToCart(Product(
+              id: smoothie["id"],
+              name: smoothie["name"],
+              price: smoothie["price"],
+              stock: smoothie["stock"],
+            ));
+          },
+        );
+      },
+    );
   }
 }

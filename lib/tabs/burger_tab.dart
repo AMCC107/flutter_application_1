@@ -1,10 +1,11 @@
 import 'package:flutter_application_1/models/product.dart';
 import 'package:flutter/material.dart';
- import 'package:flutter_application_1/utils/donut_tile.dart';
+import 'package:flutter_application_1/utils/donut_tile.dart';
 
 class BurgerTab extends StatelessWidget {
   final Function(Product) addToCart;
-//listas de donas
+
+  // Lista de hamburguesas
   final List burgersOnSale = [
     [
       "Classic Burger",
@@ -68,33 +69,31 @@ class BurgerTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Widget para usar cuadrícula
     return GridView.builder(
-        //cuantos elementos hay en la rejilla
-        itemCount: burgersOnSale.length,
-        padding: EdgeInsets.all(12),
-        // Preparatoria 1. cómo se distribuirán los elementos
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //para decir cuantas columnas usará
-          crossAxisCount: 2,
-          //relación de aspecto (proporción)
-          childAspectRatio: 1 / 1.5,
-        ),
-        itemBuilder: (context, index) {
-          //cada elemento individual
-          return DonutTile(
-              donutFlavor: burgersOnSale[index][0],
-              donutStore: burgersOnSale[index][1],
-              donutPrice: burgersOnSale[index][2].toString(),
-              donutColor: burgersOnSale[index][3],
-              imageName: burgersOnSale[index][4],
-              onAddToCart: () {
-                double price = double.parse(burgersOnSale[index][2]);
-                addToCart(Product(
-                  name: burgersOnSale[index][0],
-                  price: price,
-                ));
-              });
-        });
+      itemCount: burgersOnSale.length,
+      padding: const EdgeInsets.all(12),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1 / 1.5,
+      ),
+      itemBuilder: (context, index) {
+        return DonutTile(
+          donutFlavor: burgersOnSale[index][0],
+          donutStore: burgersOnSale[index][1],
+          donutPrice: burgersOnSale[index][2].toString(),
+          donutColor: burgersOnSale[index][3],
+          imageName: burgersOnSale[index][4],
+          onAddToCart: () {
+            double price = double.parse(burgersOnSale[index][2]);
+            addToCart(Product(
+              id: index, // 
+              name: burgersOnSale[index][0],
+              price: price,
+              stock:1.0
+            ));
+          },
+        );
+      },
+    );
   }
 }
